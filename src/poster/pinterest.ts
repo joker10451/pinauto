@@ -188,7 +188,8 @@ async function firstVisible(
   for (const sel of selectors) {
     try {
       const loc = page.locator(sel).first();
-      if (await loc.isVisible({ timeout: 1500 }).catch(() => false)) {
+      const count = await loc.count();
+      if (count > 0) {
         return loc;
       }
     } catch {
