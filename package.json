@@ -1,0 +1,36 @@
+{
+  "name": "pinterestai-bot",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Pinterest auto-poster for Perfluence affiliate marketing with free browser automation.",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "vercel-build": "tsc -p tsconfig.json",
+    "dev": "vercel dev",
+    "set-webhook": "ts-node scripts/setWebhook.ts",
+    "lint": "tsc --noEmit",
+    "post": "ts-node src/poster/index.ts",
+    "post:once": "ts-node src/poster/index.ts --once",
+    "post:debug": "ts-node src/poster/index.ts --once --debug",
+    "post:probe": "ts-node src/poster/index.ts --probe",
+    "post:save-auth": "playwright auth-cli --auth-cache auth_json.json https://www.pinterest.com",
+    "github:post": "ts-node src/poster/index.ts --once"
+  },
+  "dependencies": {
+    "firebase-admin": "12.7.0",
+    "grammy": "1.30.0",
+    "node-fetch": "2.7.0",
+    "playwright": "1.52.0",
+    "dotenv": "16.4.7"
+  },
+  "devDependencies": {
+    "@types/node": "20.14.10",
+    "@types/node-fetch": "2.6.11",
+    "@vercel/node": "3.2.8",
+    "ts-node": "10.9.2",
+    "typescript": "5.5.4"
+  }
+}

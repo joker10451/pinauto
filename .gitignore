@@ -1,0 +1,17 @@
+node_modules/
+dist/
+.vercel/
+.env
+.env.local
+.env.*.local
+*.log
+.DS_Store
+screenshots/
+temp/
+browser-profile/
+auth_json.json
+
+# Never commit raw Firebase credentials
+FIREBASE_SERVICE_ACCOUNT*.json
+service-account*.json
+*-firebase-adminsdk-*.json

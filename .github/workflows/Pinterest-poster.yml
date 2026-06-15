@@ -1,0 +1,65 @@
+name: Pinterest Automatic Poster
+
+on:
+  schedule:
+    # Запуск каждые 2 часа. Минуты ставим случайные (27),
+    # чтобы не запускаться ровно в 00 минут как все остальные боты.
+    - cron: '27 */2 * * *'
+  # Позволяет запускать скрипт вручную кнопкой в панели GitHub
+  workflow_dispatch:
+
+jobs:
+  post:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Скачиваем код из репозитория
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # 2. Поднимаем Node.js
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      # 3. Восстанавливаем сессию браузера из кэша GitHub
+      # browser-profile/ содержит cookies от Pinterest, поэтому кэшируем её
+      - name: Restore Pinterest Session
+        uses: actions/cache@v4
+        with:
+          path: browser-profile/
+          key: ${{ runner.os }}-pinterest-session-${{ github.run_id }}
+          restore-keys: |
+            ${{ runner.os }}-pinterest-session-
+
+      # 4. Устанавливаем зависимости
+      - name: Install dependencies
+        run: npm ci
+
+      # 5. Устанавливаем только Chromium для Playwright
+      # --with-deps ставит системные библиотеки для работы браузера
+      - name: Install Playwright Chromium
+        run: npx playwright install chromium --with-deps
+
+      # 6. Запуск постинга с прокидыванием переменных окружения
+      - name: Run Pinterest Poster
+        env:
+          HEADLESS: "true"
+          FIREBASE_SERVICE_ACCOUNT_B64: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_B64 }}
+          PROXY_SERVER: ${{ secrets.PROXY_SERVER }}
+          PROXY_USERNAME: ${{ secrets.PROXY_USERNAME }}
+          PROXY_PASSWORD: ${{ secrets.PROXY_PASSWORD }}
+          CONTENT_PLAN_COLLECTION: ${{ secrets.CONTENT_PLAN_COLLECTION }}
+          POST_INTERVAL_SEC: ${{ secrets.POST_INTERVAL_SEC }}
+        run: npm run github:post
+
+      # 7. Сохраняем обновлённую сессию обратно в кэш
+      # Куки Pinterest могут обновиться во время работы скрипта
+      - name: Save Pinterest Session
+        if: always()
+        uses: actions/cache/save@v4
+        with:
+          path: browser-profile/
+          key: ${{ runner.os }}-pinterest-session-${{ github.run_id }}
