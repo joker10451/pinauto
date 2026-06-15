@@ -26,10 +26,13 @@ const SELECTORS = {
   ] as const,
   titleInput: [
     "textarea#pinTitle",
+    'textarea[placeholder="Добавьте название"]',
+    'textarea[placeholder*="Добавьте название"]',
+    'textarea[placeholder*="название"]',
+    'textarea[placeholder*="Название"]',
     'textarea[placeholder*="title"]',
     'textarea[placeholder*="Title"]',
     'textarea[placeholder*="Add your title"]',
-    'textarea[placeholder*="Название"]',
     'textarea[placeholder*="Заголовок"]',
     'div[data-test-id="pin-title"] textarea',
     '[data-test-id="pin-name-input"] textarea',
@@ -62,6 +65,7 @@ const SELECTORS = {
     'textarea[placeholder*="Describe"]',
     'textarea[placeholder*="Расскажите"]',
     'textarea[placeholder*="Описание"]',
+    'textarea[placeholder*="описание"]',
     'div[data-test-id="pin-description"] textarea',
     '[data-test-id="pin-desc-input"] textarea',
     '[data-test-id="pin-description-input"] textarea',
@@ -90,6 +94,13 @@ const SELECTORS = {
     'input[placeholder*="Website"]',
     'input[placeholder*="destination"]',
     'input[placeholder*="Ссылка"]',
+    'textarea[placeholder="Добавьте целевую ссылку"]',
+    'textarea[placeholder*="Добавьте целевую ссылку"]',
+    'textarea[placeholder*="целевую ссылку"]',
+    'textarea[placeholder*="ссылку"]',
+    'textarea[placeholder*="link"]',
+    'textarea[placeholder*="Link"]',
+    'textarea[placeholder*="URL"]',
     '[data-test-id="pin-link"] input',
     'div[data-test-id="destination-link"] input',
     '[data-test-id="pin-link-input"] input',
@@ -363,6 +374,11 @@ async function waitForSuccess(page: Page): Promise<boolean> {
 async function detectCaptcha(page: Page): Promise<boolean> {
   const url = page.url().toLowerCase();
   if (url.includes("challenge") || url.includes("captcha")) return true;
+
+  // Проверяем наличие reCAPTCHA на странице
+  const recaptcha = page.locator("#g-recaptcha-response, .g-recaptcha, iframe[title*='reCAPTCHA']");
+  const recaptchaVisible = await recaptcha.count().then((count) => count > 0).catch(() => false);
+  if (recaptchaVisible) return true;
 
   const body = page.locator("body");
   const text = await body.innerText({ timeout: 3000 }).catch(() => "");
