@@ -1,0 +1,448 @@
+{
+  "cookies": [
+    {
+      "name": "language",
+      "value": "ru-RU",
+      "domain": ".perfluence.net",
+      "path": "/",
+      "expires": 1784118943.321549,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "u_tzo",
+      "value": "10800",
+      "domain": ".perfluence.net",
+      "path": "/",
+      "expires": 1813062942,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "bh",
+      "value": "EigiTm90LkEvQnJhbmQiO3Y9Ijk5IiwgIkNocm9taXVtIjt2PSIxMzYiKgI/MDoJIldpbmRvd3MiYO/iv9EGah7cyuH/CJLYobEDn8/h6gP7+vDnDev//fYP+5HPhwg=",
+      "domain": ".yandex.ru",
+      "path": "/",
+      "expires": 1816086894.806202,
+      "httpOnly": false,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "_ttp",
+      "value": "3FAnlxeSpv7aynciITKj074xJUf",
+      "domain": ".tiktok.com",
+      "path": "/",
+      "expires": 1815222936.680319,
+      "httpOnly": false,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "_ym_uid",
+      "value": "178152689527943446",
+      "domain": ".perfluence.net",
+      "path": "/",
+      "expires": 1813062895,
+      "httpOnly": false,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "_ym_d",
+      "value": "1781526895",
+      "domain": ".perfluence.net",
+      "path": "/",
+      "expires": 1813062895,
+      "httpOnly": false,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "_ym_isad",
+      "value": "2",
+      "domain": ".perfluence.net",
+      "path": "/",
+      "expires": 1781598895,
+      "httpOnly": false,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "_tt_enable_cookie",
+      "value": "1",
+      "domain": ".perfluence.net",
+      "path": "/",
+      "expires": 1815222936,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "_ttp",
+      "value": "01KV5ME6G6AR4QA37ZBD0ETK1G_.tt.1",
+      "domain": ".perfluence.net",
+      "path": "/",
+      "expires": 1815222936,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "sync_cookie_csrf",
+      "value": "1977186856fake",
+      "domain": ".mc.yandex.com",
+      "path": "/",
+      "expires": 1781527495,
+      "httpOnly": false,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "sync_cookie_csrf",
+      "value": "3086217903fake",
+      "domain": ".mc.yandex.ru",
+      "path": "/",
+      "expires": 1781527495,
+      "httpOnly": false,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "yabs-sid",
+      "value": "2059340601781526895",
+      "domain": "mc.yandex.com",
+      "path": "/",
+      "expires": -1,
+      "httpOnly": false,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "i",
+      "value": "Y57K1SwzNUzFmKU3zR0Cwa93kCTtMezPY4T1xypkO+rJq3JhyZx0vFIPLvRQWaw2bXth28+eMwvIQE3EmLn9Gtikn64=",
+      "domain": ".yandex.com",
+      "path": "/",
+      "expires": 1816086895.215661,
+      "httpOnly": true,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "yandexuid",
+      "value": "7027939931781526895",
+      "domain": ".yandex.com",
+      "path": "/",
+      "expires": 1816086895.215688,
+      "httpOnly": false,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "yuidss",
+      "value": "7027939931781526895",
+      "domain": ".yandex.com",
+      "path": "/",
+      "expires": 1813062895,
+      "httpOnly": false,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "ymex",
+      "value": "1813062895.yrts.1781526895#1813062895.yrtsi.1781526895",
+      "domain": ".yandex.com",
+      "path": "/",
+      "expires": 1813062895,
+      "httpOnly": false,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "receive-cookie-deprecation",
+      "value": "1",
+      "domain": ".yandex.com",
+      "path": "/",
+      "expires": 1813062943,
+      "httpOnly": true,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "sync_cookie_csrf_secondary",
+      "value": "77763889fake",
+      "domain": ".mc.yandex.com",
+      "path": "/",
+      "expires": 1781527495,
+      "httpOnly": false,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "sync_cookie_csrf_secondary",
+      "value": "1056546363fake",
+      "domain": ".mc.yandex.ru",
+      "path": "/",
+      "expires": 1781527495,
+      "httpOnly": false,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "sync_cookie_ok_secondary",
+      "value": "synced",
+      "domain": ".mc.yandex.com",
+      "path": "/",
+      "expires": 1781613295,
+      "httpOnly": false,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "yandexuid",
+      "value": "7027939931781526895",
+      "domain": ".yandex.ru",
+      "path": "/",
+      "expires": 1816086895.34185,
+      "httpOnly": false,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "yuidss",
+      "value": "7027939931781526895",
+      "domain": ".yandex.ru",
+      "path": "/",
+      "expires": 1816086895.341888,
+      "httpOnly": false,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "i",
+      "value": "Y57K1SwzNUzFmKU3zR0Cwa93kCTtMezPY4T1xypkO+rJq3JhyZx0vFIPLvRQWaw2bXth28+eMwvIQE3EmLn9Gtikn64=",
+      "domain": ".yandex.ru",
+      "path": "/",
+      "expires": 1816086895.341899,
+      "httpOnly": false,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "_ym_visorc",
+      "value": "w",
+      "domain": ".perfluence.net",
+      "path": "/",
+      "expires": 1781528743,
+      "httpOnly": false,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "_ym_uid",
+      "value": "1781526895593919876",
+      "domain": ".smartcaptcha.yandexcloud.net",
+      "path": "/",
+      "expires": 1813062895,
+      "httpOnly": false,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "_ym_d",
+      "value": "1781526895",
+      "domain": ".smartcaptcha.yandexcloud.net",
+      "path": "/",
+      "expires": 1813062895,
+      "httpOnly": false,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "_ym_isad",
+      "value": "2",
+      "domain": ".smartcaptcha.yandexcloud.net",
+      "path": "/",
+      "expires": 1781598896,
+      "httpOnly": false,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "_ym_visorc",
+      "value": "b",
+      "domain": ".smartcaptcha.yandexcloud.net",
+      "path": "/",
+      "expires": 1781528736,
+      "httpOnly": false,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "is_ab_test",
+      "value": "1",
+      "domain": ".perfluence.net",
+      "path": "/",
+      "expires": 1784118922.810966,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "reg_modal_shown",
+      "value": "true",
+      "domain": ".perfluence.net",
+      "path": "/",
+      "expires": 1781613326,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "ttcsid",
+      "value": "1781526895113::-xxknRVslBwDTe_xtnnb.1.1781526941072.0::1.41085.41587::45957.10.1209.644::0.0.0",
+      "domain": ".perfluence.net",
+      "path": "/",
+      "expires": 1815222941,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "ttcsid_C0EI9ACP76SVVJ0UL1O0",
+      "value": "1781526895113::A4Zkbza13OZjQewZBmdZ.1.1781526941072.1",
+      "domain": ".perfluence.net",
+      "path": "/",
+      "expires": 1815222941,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "PHPSESSID",
+      "value": "70d0ec4823e7bd720a1cd072d4907c6f",
+      "domain": ".perfluence.net",
+      "path": "/",
+      "expires": 1782131741.581804,
+      "httpOnly": true,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "bi",
+      "value": "64af6fa9271b1dec4945992e6667b5bd",
+      "domain": ".perfluence.net",
+      "path": "/",
+      "expires": 1816086941.581817,
+      "httpOnly": true,
+      "secure": true,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "_identity",
+      "value": "5d565974630d0cb13a21cb5de46a2baa194aab0675432c9c0c3452397c8d5d8ca%3A2%3A%7Bi%3A0%3Bs%3A9%3A%22_identity%22%3Bi%3A1%3Bs%3A51%3A%22%5B861964%2C%22QMJ8pt17RehCtdftW0Op0-M1D3SUh_9K%22%2C2592000%5D%22%3B%7D",
+      "domain": ".perfluence.net",
+      "path": "/",
+      "expires": 1784118943.321601,
+      "httpOnly": true,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "_csrf",
+      "value": "e8dbe6fd77ba46fcf9f621ef200ca8890a2da46cf5af540eac1aeeb0d7d46e01a%3A2%3A%7Bi%3A0%3Bs%3A5%3A%22_csrf%22%3Bi%3A1%3Bs%3A32%3A%22uvUMzqDMaHpl66Juxfi3EhbgVC_er75w%22%3B%7D",
+      "domain": ".perfluence.net",
+      "path": "/",
+      "expires": -1,
+      "httpOnly": true,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "screen_width",
+      "value": "1356",
+      "domain": ".perfluence.net",
+      "path": "/",
+      "expires": 1813062942,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "bh",
+      "value": "EigiTm90LkEvQnJhbmQiO3Y9Ijk5IiwgIkNocm9taXVtIjt2PSIxMzYiGgN4NjQiDTEzNi4wLjcxMDMuMjUqAj8wOgkiV2luZG93cyJCBDEwLjBKAjY0UjciTm90LkEvQnJhbmQiO3Y9Ijk5LjAuMC4wIiwiQ2hyb21pdW0iO3Y9IjEzNi4wLjcxMDMuMjUiYJ/jv9EGah7cyuH/CJLYobEDn8/h6gP7+vDnDev//fYP+5HPhwg=",
+      "domain": ".yandex.com",
+      "path": "/",
+      "expires": 1816086943,
+      "httpOnly": false,
+      "secure": true,
+      "sameSite": "None"
+    }
+  ],
+  "origins": [
+    {
+      "origin": "https://dash.perfluence.net",
+      "localStorage": [
+        {
+          "name": "_ym_synced",
+          "value": "{\"com\":29692114}"
+        },
+        {
+          "name": "_ym53338945:0_reqNum",
+          "value": "27"
+        },
+        {
+          "name": "_ym53338945_lsid",
+          "value": "1084533185095"
+        },
+        {
+          "name": "_ym_retryReqs",
+          "value": "{}"
+        },
+        {
+          "name": "_ym_wv2rf:53338945:0",
+          "value": "1"
+        },
+        {
+          "name": "_ym53338945_il",
+          "value": "\"Войти\""
+        },
+        {
+          "name": "_ym_uid",
+          "value": "\"178152689527943446\""
+        }
+      ]
+    },
+    {
+      "origin": "https://smartcaptcha.yandexcloud.net",
+      "localStorage": [
+        {
+          "name": "_ym_synced",
+          "value": "{}"
+        },
+        {
+          "name": "_ym_uid",
+          "value": "\"1781526895593919876\""
+        },
+        {
+          "name": "_ym_retryReqs",
+          "value": "{}"
+        },
+        {
+          "name": "_ym_wv2rf:93891318:0",
+          "value": "1"
+        },
+        {
+          "name": "_ym93891318_lsid",
+          "value": "1336979367528"
+        },
+        {
+          "name": "_ym93891318:0_reqNum",
+          "value": "10"
+        }
+      ]
+    }
+  ]
+}
