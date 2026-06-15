@@ -53,10 +53,24 @@ export async function humanTypeLocator(
   await delay(randomBetween(200, 500));
   await loc.click();
   await delay(randomBetween(100, 300));
-  await loc.fill("");
-  await delay(randomBetween(150, 400));
-  for (const char of text) {
-    await loc.press(char, { delay: randomBetween(30, 120) });
+  
+  // Проверяем, можно ли использовать fill (для textarea/input)
+  const tagName = await loc.evaluate((el) => el.tagName.toLowerCase()).catch(() => "");
+  if (tagName === "textarea" || tagName.startsWith("input")) {
+    await loc.fill("");
+    await delay(randomBetween(150, 400));
+    for (const char of text) {
+      await loc.press(char, { delay: randomBetween(30, 120) });
+    }
+  } else {
+    // Для contenteditable div используем keyboard input
+    await loc.press("Control+A");
+    await delay(randomBetween(100, 200));
+    await loc.press("Backspace");
+    await delay(randomBetween(150, 400));
+    for (const char of text) {
+      await loc.press(char, { delay: randomBetween(30, 120) });
+    }
   }
   await delay(randomBetween(100, 300));
 }
