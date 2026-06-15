@@ -40,6 +40,7 @@ export async function createBrowserSession(): Promise<BrowserSession> {
   const context = await chromium.launchPersistentContext(userDataDir, {
     headless: config.poster.headless(),
     proxy,
+    storageState: authStatePath,
     viewport: buildViewport(),
     userAgent:
       "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
