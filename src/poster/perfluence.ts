@@ -135,16 +135,19 @@ async function saveOffersToFirestore(
   for (const offer of offers) {
     if (!offer.creativeUrl) continue;
 
-    const content: Omit<ContentPlanDocument, "id" | "status"> = {
+    const content: Record<string, unknown> = {
       pin_title: offer.title,
       pin_description: offer.description,
       media_url: offer.creativeUrl,
       destination_link: "https://t.me/smart_zakupka",
       perfluence_offer_id: offer.id,
       perfluence_ref_link: offer.refLink,
-      deadline_at: offer.deadlineAt ? Timestamp.fromDate(offer.deadlineAt) : undefined,
       created_at: Timestamp.now(),
     };
+
+    if (offer.deadlineAt) {
+      content.deadline_at = Timestamp.fromDate(offer.deadlineAt);
+    }
 
     const docRef = db().collection(collection).doc();
     batch.set(docRef, {
