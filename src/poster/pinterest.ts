@@ -44,6 +44,8 @@ const SELECTORS = {
     'input[data-test-id="pin-title"]',
     'input[placeholder*="title"]',
     'input[placeholder*="Title"]',
+    'textarea',
+    'input[type="text"]',
   ] as const,
   descriptionInput: [
     'textarea[placeholder*="description"]',
@@ -60,6 +62,8 @@ const SELECTORS = {
     'textarea[aria-label*="Описание"]',
     'textarea[class*="description"]',
     'textarea[class*="Description"]',
+    'textarea:nth-of-type(2)',
+    'textarea:nth-child(2)',
   ] as const,
   linkInput: [
     'input[placeholder*="link"]',
@@ -79,6 +83,8 @@ const SELECTORS = {
     'input[aria-label*="Ссылка"]',
     'input[class*="link"]',
     'input[class*="Link"]',
+    'input[type="url"]',
+    'input[type="text"]',
   ] as const,
   boardTrigger: [
     '[data-test-id="board-dropdown-select-button"]',
@@ -157,6 +163,32 @@ async function firstVisible(
   return page.locator(fallback).first();
 }
 
+async function debugPageStructure(page: Page): Promise<void> {
+  try {
+    const info = await page.evaluate(`
+      (() => {
+        const textareas = Array.from(document.querySelectorAll("textarea")).map((el) => ({
+          placeholder: el.placeholder,
+          ariaLabel: el.getAttribute("aria-label"),
+          id: el.id,
+          class: el.className,
+        }));
+        const inputs = Array.from(document.querySelectorAll("input")).map((el) => ({
+          type: el.type,
+          placeholder: el.placeholder,
+          ariaLabel: el.getAttribute("aria-label"),
+          id: el.id,
+          class: el.className,
+        }));
+        return { textareas, inputs, url: window.location.href };
+      })()
+    `);
+    console.log("[pinterest] page structure:", JSON.stringify(info, null, 2));
+  } catch {
+    console.warn("[pinterest] could not dump page structure");
+  }
+}
+
 async function ensureLoggedIn(page: Page): Promise<boolean> {
   const url = page.url().toLowerCase();
   const body = page.locator("body");
@@ -192,17 +224,19 @@ async function fillFieldLocator(
   await humanTypeLocator(loc, text);
 }
 
-async function waitForFormReady(page: Page): Promise<void> {
+async function waitForFormReady(page: Page, debug = false): Promise<void> {
   // Ждём пока после загрузки медиа появится форма с полями
   try {
     await page.waitForSelector(
       'textarea, input[placeholder*="title"], input[placeholder*="Title"], input[placeholder*="link"], input[placeholder*="Link"]',
-      { timeout: 60000 }
+      { timeout: 90000 }
     );
   } catch {
     console.warn("[pinterest] form readiness check timed out, continuing...");
   }
-  await delay(randomBetween(1000, 2000));
+  
+  await debugScreenshot(page, "form_ready_check", debug);
+  await delay(randomBetween(2000, 4000));
 }
 
 async function fillField(
@@ -368,7 +402,8 @@ export async function publishPin(
     console.log("[pinterest] uploading media...");
     await uploadMedia(page, mediaPath);
     await debugScreenshot(page, "2_media_uploaded", debug);
-    await waitForFormReady(page);
+    await waitForFormReady(page, debug);
+    await debugPageStructure(page);
 
     console.log("[pinterest] filling title...");
     await fillField(page, SELECTORS.titleInput, content.pin_title);
