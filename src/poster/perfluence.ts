@@ -48,10 +48,12 @@ async function scrapeOffers(page: Page): Promise<PerfluenceOffer[]> {
   console.log("[perfluence] navigating to dashboard...");
   await page.goto(PERFLUENCE_URL, {
     waitUntil: "domcontentloaded",
-    timeout: 60000,
+    timeout: 180000,
+  }).catch(async () => {
+    console.warn("[perfluence] page load timed out, continuing anyway...");
   });
 
-  await page.waitForTimeout(5000);
+  await page.waitForTimeout(15000);
 
   // Проверяем, что авторизация успешна
   const currentUrl = page.url();
@@ -72,35 +74,25 @@ async function scrapeOffers(page: Page): Promise<PerfluenceOffer[]> {
   const count = await offerCards.count();
   console.log(`[perfluence] found ${count} potential offer cards`);
 
-  for (let i = 0; i < Math.min(count, 10); i++) {
+  for (let i = 0; i < Math.min(count, 5); i++) {
     const card = offerCards.nth(i);
     const visible = await card.isVisible().catch(() => false);
     if (!visible) continue;
 
     const text = await card.innerText().catch(() => "");
-    const brandName =
-      (await card.locator('[class*="brand"], [class*="logo"]').first().innerText().catch(() => "")) ||
-      text.split("\n")[0] ||
-      "Unknown Brand";
-
-    const title =
-      (await card.locator("h1, h2, h3, [class*='title']").first().innerText().catch(() => "")) ||
-      text.split("\n")[1] ||
-      brandName;
-
-    const description =
-      (await card.locator("p, [class*='description']").first().innerText().catch(() => "")) ||
-      text.slice(0, 200);
+    const lines = text.split("\n").filter((line) => line.trim().length > 0);
+    
+    const brandName = lines[0] || "Unknown Brand";
+    const title = lines[1] || brandName;
+    const description = lines.slice(1, 4).join(" ").slice(0, 300) || text.slice(0, 300);
 
     const imgSrc =
       (await card.locator("img").first().getAttribute("src").catch(() => "")) || "";
 
-    // Ищем ссылку на рефку
     const refLink =
-      (await card.locator("a[href*='perfluence'], a[href*='promo'], a[href*='offer']").first().getAttribute("href").catch(() => "")) ||
-      "";
+      (await card.locator("a").first().getAttribute("href").catch(() => "")) || "";
 
-    if (title && title !== brandName) {
+    if (title && title.length > 5) {
       offers.push({
         id: `${Date.now()}-${i}`,
         brandName,
@@ -115,24 +107,19 @@ async function scrapeOffers(page: Page): Promise<PerfluenceOffer[]> {
   // Если не нашли через карточки, пробуем другой подход
   if (offers.length === 0) {
     console.log("[perfluence] fallback scraping...");
-    const allLinks = page.locator("a");
-    const linkCount = await allLinks.count();
+    const bodyText = await page.locator("body").innerText().catch(() => "");
+    const lines = bodyText.split("\n").filter((line) => line.trim().length > 20);
 
-    for (let i = 0; i < Math.min(linkCount, 20); i++) {
-      const link = allLinks.nth(i);
-      const text = await link.innerText().catch(() => "");
-      const href = await link.getAttribute("href").catch(() => "");
-
-      if (text && text.length > 10 && text.length < 100) {
-        offers.push({
-          id: `${Date.now()}-${i}`,
-          brandName: text.split(" ")[0],
-          title: text,
-          description: text,
-          creativeUrl: "",
-          refLink: href || "",
-        });
-      }
+    for (let i = 0; i < Math.min(lines.length, 5); i++) {
+      const text = lines[i].trim();
+      offers.push({
+        id: `${Date.now()}-${i}`,
+        brandName: text.split(" ")[0],
+        title: text.slice(0, 80),
+        description: text,
+        creativeUrl: "",
+        refLink: "",
+      });
     }
   }
 
