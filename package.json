@@ -16,7 +16,7 @@
     "post:once": "ts-node src/poster/index.ts --once",
     "post:debug": "ts-node src/poster/index.ts --once --debug",
     "post:probe": "ts-node src/poster/index.ts --probe",
-    "post:save-auth": "playwright auth-cli --auth-cache auth_json.json https://www.pinterest.com",
+    "post:save-auth": "ts-node src/poster/save-auth.ts",
     "github:post": "ts-node src/poster/index.ts --once"
   },
   "dependencies": {
