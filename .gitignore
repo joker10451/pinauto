@@ -10,6 +10,8 @@ screenshots/
 temp/
 browser-profile/
 auth_json.json
+perfluence-profile/
+perfluence_auth.json
 
 # Never commit raw Firebase credentials
 FIREBASE_SERVICE_ACCOUNT*.json

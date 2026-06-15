@@ -12,7 +12,7 @@ export interface ContentPlanDocument {
   board_name?: string;
   perfluence_offer_id?: string;
   perfluence_ref_link?: string;
-  deadline_at?: Date;
+  deadline_at?: Timestamp;
   error_message?: string;
   error_screenshot_base64?: string;
   pin_url?: string;

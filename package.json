@@ -17,6 +17,8 @@
     "post:debug": "ts-node src/poster/index.ts --once --debug",
     "post:probe": "ts-node src/poster/index.ts --probe",
     "post:save-auth": "ts-node src/poster/save-auth.ts",
+    "perfluence:save-auth": "ts-node src/poster/save-perfluence-auth.ts",
+    "perfluence:scrape": "ts-node src/poster/scrape-perfluence.ts",
     "content:add": "ts-node src/poster/add-content.ts",
     "github:post": "ts-node src/poster/index.ts --once"
   },

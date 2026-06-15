@@ -43,7 +43,14 @@ jobs:
       - name: Install Playwright Chromium
         run: npx playwright install chromium --with-deps
 
-      # 6. Запуск постинга с прокидыванием переменных окружения
+      # 6. Забираем новые офферы из Perfluence
+      - name: Scrape Perfluence Offers
+        env:
+          FIREBASE_SERVICE_ACCOUNT_B64: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_B64 }}
+          CONTENT_PLAN_COLLECTION: ${{ secrets.CONTENT_PLAN_COLLECTION }}
+        run: npm run perfluence:scrape
+
+      # 7. Запуск постинга с прокидыванием переменных окружения
       - name: Run Pinterest Poster
         env:
           HEADLESS: "true"
@@ -52,7 +59,7 @@ jobs:
           POST_INTERVAL_SEC: ${{ secrets.POST_INTERVAL_SEC }}
         run: npm run github:post
 
-      # 7. Сохраняем обновлённую сессию обратно в кэш
+      # 8. Сохраняем обновлённую сессию обратно в кэш
       # Куки Pinterest могут обновиться во время работы скрипта
       - name: Save Pinterest Session
         if: always()
