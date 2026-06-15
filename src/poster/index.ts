@@ -16,16 +16,22 @@ async function getPendingContent(): Promise<
   const snapshot = await db()
     .collection(COLLECTION())
     .where("status", "==", "pending")
-    .orderBy("created_at", "asc")
-    .limit(1)
+    .limit(100)
     .get();
 
   if (snapshot.empty) return null;
 
-  const doc = snapshot.docs[0];
-  return { id: doc.id, ...doc.data() } as ContentPlanDocument & {
-    id: string;
-  };
+  const docs = snapshot.docs
+    .map((doc) => ({ id: doc.id, ...doc.data() } as ContentPlanDocument & {
+      id: string;
+    }))
+    .sort((a, b) => {
+      const aTime = a.created_at?.toMillis?.() || 0;
+      const bTime = b.created_at?.toMillis?.() || 0;
+      return aTime - bTime;
+    });
+
+  return docs[0] as ContentPlanDocument & { id: string };
 }
 
 async function updateContentStatus(
