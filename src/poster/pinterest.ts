@@ -29,21 +29,37 @@ const SELECTORS = {
     'textarea[placeholder*="title"]',
     'textarea[placeholder*="Title"]',
     'textarea[placeholder*="Add your title"]',
+    'textarea[placeholder*="Название"]',
+    'textarea[placeholder*="Заголовок"]',
     'div[data-test-id="pin-title"] textarea',
     '[data-test-id="pin-name-input"] textarea',
     '[data-test-id="pin-title-input"] textarea',
+    '[data-test-id="title-input"] textarea',
     'textarea[aria-label*="title"]',
     'textarea[aria-label*="Title"]',
+    'textarea[aria-label*="Название"]',
+    'textarea[aria-label*="Заголовок"]',
+    'textarea[class*="title"]',
+    'textarea[class*="Title"]',
+    'input[data-test-id="pin-title"]',
+    'input[placeholder*="title"]',
+    'input[placeholder*="Title"]',
   ] as const,
   descriptionInput: [
     'textarea[placeholder*="description"]',
     'textarea[placeholder*="Description"]',
     'textarea[placeholder*="Describe"]',
+    'textarea[placeholder*="Расскажите"]',
+    'textarea[placeholder*="Описание"]',
     'div[data-test-id="pin-description"] textarea',
     '[data-test-id="pin-desc-input"] textarea',
     '[data-test-id="pin-description-input"] textarea',
+    '[data-test-id="description-input"] textarea',
     'textarea[aria-label*="description"]',
     'textarea[aria-label*="Description"]',
+    'textarea[aria-label*="Описание"]',
+    'textarea[class*="description"]',
+    'textarea[class*="Description"]',
   ] as const,
   linkInput: [
     'input[placeholder*="link"]',
@@ -52,12 +68,17 @@ const SELECTORS = {
     'input[placeholder*="website"]',
     'input[placeholder*="Website"]',
     'input[placeholder*="destination"]',
+    'input[placeholder*="Ссылка"]',
     '[data-test-id="pin-link"] input',
     'div[data-test-id="destination-link"] input',
     '[data-test-id="pin-link-input"] input',
+    '[data-test-id="link-input"] input',
     'input[aria-label*="link"]',
     'input[aria-label*="Link"]',
     'input[aria-label*="URL"]',
+    'input[aria-label*="Ссылка"]',
+    'input[class*="link"]',
+    'input[class*="Link"]',
   ] as const,
   boardTrigger: [
     '[data-test-id="board-dropdown-select-button"]',
@@ -171,13 +192,44 @@ async function fillFieldLocator(
   await humanTypeLocator(loc, text);
 }
 
+async function waitForFormReady(page: Page): Promise<void> {
+  // Ждём пока после загрузки медиа появится форма с полями
+  try {
+    await page.waitForSelector(
+      'textarea, input[placeholder*="title"], input[placeholder*="Title"], input[placeholder*="link"], input[placeholder*="Link"]',
+      { timeout: 60000 }
+    );
+  } catch {
+    console.warn("[pinterest] form readiness check timed out, continuing...");
+  }
+  await delay(randomBetween(1000, 2000));
+}
+
 async function fillField(
   page: Page,
   selectors: readonly string[],
   text: string
 ): Promise<void> {
-  const loc = await firstVisible(page, selectors, 8000);
-  await fillFieldLocator(loc, text);
+  let loc: Locator;
+  let attempts = 0;
+
+  while (attempts < 3) {
+    try {
+      loc = await firstVisible(page, selectors, 8000);
+      await fillFieldLocator(loc, text);
+      return;
+    } catch (err) {
+      attempts++;
+      console.warn(`[pinterest] field not found, retry ${attempts}/3`);
+      await delay(randomBetween(2000, 4000));
+      await page.screenshot({
+        path: getScreenshotPath(),
+        fullPage: false,
+      }).catch(() => {});
+    }
+  }
+
+  throw new Error(`Could not find field with selectors: ${selectors.join(", ")}`);
 }
 
 async function selectBoard(
@@ -316,6 +368,7 @@ export async function publishPin(
     console.log("[pinterest] uploading media...");
     await uploadMedia(page, mediaPath);
     await debugScreenshot(page, "2_media_uploaded", debug);
+    await waitForFormReady(page);
 
     console.log("[pinterest] filling title...");
     await fillField(page, SELECTORS.titleInput, content.pin_title);
