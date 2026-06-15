@@ -1,4 +1,3 @@
-import path from "node:path";
 import { chromium, type BrowserContext, type Page } from "playwright";
 import { config } from "../config";
 
@@ -25,11 +24,9 @@ function buildViewport() {
 }
 
 export async function createBrowserSession(): Promise<BrowserSession> {
-  const userDataDir = config.poster.userDataDir();
   const authStatePath = config.poster.authStatePath();
   const proxy = buildProxy();
 
-  console.log(`[browser] userDataDir: ${userDataDir}`);
   console.log(`[browser] authStatePath: ${authStatePath}`);
   if (proxy) {
     console.log(`[browser] proxy: ${proxy.server}`);
@@ -37,10 +34,18 @@ export async function createBrowserSession(): Promise<BrowserSession> {
     console.log("[browser] no proxy configured");
   }
 
-  const context = await chromium.launchPersistentContext(userDataDir, {
+  const browser = await chromium.launch({
     headless: config.poster.headless(),
+    args: [
+      "--disable-blink-features=AutomationControlled",
+      "--disable-dev-shm-usage",
+      "--no-first-run",
+      "--no-default-browser-check",
+    ],
+  });
+
+  const context = await browser.newContext({
     proxy,
-    storageState: authStatePath,
     viewport: buildViewport(),
     userAgent:
       "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
@@ -54,12 +59,7 @@ export async function createBrowserSession(): Promise<BrowserSession> {
     colorScheme: "light",
     ignoreHTTPSErrors: true,
     acceptDownloads: true,
-    args: [
-      "--disable-blink-features=AutomationControlled",
-      "--disable-dev-shm-usage",
-      "--no-first-run",
-      "--no-default-browser-check",
-    ],
+    storageState: authStatePath,
   });
 
   await context.addInitScript(`
@@ -77,13 +77,4 @@ export async function closeBrowserSession(
   context: BrowserContext
 ): Promise<void> {
   await context.close().catch(() => {});
-}
-
-export function getUserDataDir(): string {
-  return config.poster.userDataDir();
-}
-
-export function getScreenshotPath(): string {
-  const dir = config.poster.screenshotsDir();
-  return path.join(dir, `error_${Date.now()}_${Math.floor(Math.random() * 9000 + 1000)}.png`);
 }

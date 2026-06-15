@@ -30,7 +30,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: browser-profile/
-          key: ${{ runner.os }}-pinterest-session-${{ github.run_id }}
+          key: ${{ runner.os }}-pinterest-session-v1
           restore-keys: |
             ${{ runner.os }}-pinterest-session-
 
@@ -59,4 +59,4 @@ jobs:
         uses: actions/cache/save@v4
         with:
           path: browser-profile/
-          key: ${{ runner.os }}-pinterest-session-${{ github.run_id }}
+          key: ${{ runner.os }}-pinterest-session-v1-${{ github.run_id }}
