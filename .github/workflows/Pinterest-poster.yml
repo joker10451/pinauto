@@ -48,9 +48,6 @@ jobs:
         env:
           HEADLESS: "true"
           FIREBASE_SERVICE_ACCOUNT_B64: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_B64 }}
-          PROXY_SERVER: ${{ secrets.PROXY_SERVER }}
-          PROXY_USERNAME: ${{ secrets.PROXY_USERNAME }}
-          PROXY_PASSWORD: ${{ secrets.PROXY_PASSWORD }}
           CONTENT_PLAN_COLLECTION: ${{ secrets.CONTENT_PLAN_COLLECTION }}
           POST_INTERVAL_SEC: ${{ secrets.POST_INTERVAL_SEC }}
         run: npm run github:post
