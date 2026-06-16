@@ -24,22 +24,20 @@ jobs:
           node-version: '20'
           cache: 'npm'
 
-      # 3. Восстанавливаем сессию браузера из кэша GitHub
-      # browser-profile/ содержит cookies от Pinterest, поэтому кэшируем её
-      - name: Restore Pinterest Session
+      # 3. Восстанавливаем куки Pinterest из кэша
+      - name: Restore Pinterest Cookies
         uses: actions/cache@v4
         with:
-          path: browser-profile/
-          key: ${{ runner.os }}-pinterest-session-v1
+          path: cookies.json
+          key: ${{ runner.os }}-pinterest-cookies-v1
           restore-keys: |
-            ${{ runner.os }}-pinterest-session-
+            ${{ runner.os }}-pinterest-cookies-
 
       # 4. Устанавливаем зависимости
       - name: Install dependencies
         run: npm ci
 
       # 5. Устанавливаем только Chromium для Playwright
-      # --with-deps ставит системные библиотеки для работы браузера
       - name: Install Playwright Chromium
         run: npx playwright install chromium --with-deps
 
@@ -59,11 +57,10 @@ jobs:
           POST_INTERVAL_SEC: ${{ secrets.POST_INTERVAL_SEC }}
         run: npm run github:post
 
-      # 8. Сохраняем обновлённую сессию обратно в кэш
-      # Куки Pinterest могут обновиться во время работы скрипта
-      - name: Save Pinterest Session
+      # 8. Сохраняем обновлённые куки обратно в кэш
+      - name: Save Pinterest Cookies
         if: always()
         uses: actions/cache/save@v4
         with:
-          path: browser-profile/
-          key: ${{ runner.os }}-pinterest-session-v1-${{ github.run_id }}
+          path: cookies.json
+          key: ${{ runner.os }}-pinterest-cookies-v1-${{ github.run_id }}

@@ -23,11 +23,12 @@
     "github:post": "ts-node src/poster/index.ts --once"
   },
   "dependencies": {
+    "dotenv": "16.4.7",
     "firebase-admin": "12.7.0",
     "grammy": "1.30.0",
     "node-fetch": "2.7.0",
-    "playwright": "1.52.0",
-    "dotenv": "16.4.7"
+    "pinterest-js-client": "^1.0.8",
+    "playwright": "1.52.0"
   },
   "devDependencies": {
     "@types/node": "20.14.10",

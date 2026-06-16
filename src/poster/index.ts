@@ -2,9 +2,8 @@ import "dotenv/config";
 import { db, Timestamp } from "../firebase";
 import { config } from "../config";
 import type { ContentPlanDocument, ContentStatus } from "./types";
-import { createBrowserSession, closeBrowserSession } from "./browser";
 import { publishPin, probePinterestSelectors } from "./pinterest";
-import { delay, randomBetween } from "./utils";
+import { delay } from "./utils";
 
 const COLLECTION = () => config.poster.contentPlanCollection();
 
@@ -63,15 +62,8 @@ async function processOne(): Promise<boolean> {
 
   await updateContentStatus(content.id, "publishing");
 
-  let browserContext: import("playwright").BrowserContext | null = null;
-
   try {
-    console.log("[poster] creating browser session...");
-    const session = await createBrowserSession();
-    browserContext = session.context;
-    console.log("[poster] browser session created");
-
-    const result = await publishPin(session.page, content, DEBUG);
+    const result = await publishPin(content, DEBUG);
 
     if (result.success) {
       console.log("[poster] pin published successfully!");
@@ -108,32 +100,14 @@ async function processOne(): Promise<boolean> {
     await updateContentStatus(content.id, "error", extra).catch((e) =>
       console.error("[poster] failed to update error status:", e)
     );
-  } finally {
-    if (browserContext) {
-      try {
-        console.log("[poster] closing browser session...");
-        await closeBrowserSession(browserContext);
-        console.log("[poster] browser session closed");
-      } catch (e) {
-        console.warn("[poster] failed to close browser session:", e);
-      }
-    }
   }
 
   return true;
 }
 
 async function runProbe(): Promise<void> {
-  console.log("[probe] creating browser session...");
-  const session = await createBrowserSession();
-  console.log("[probe] browser session created");
-  await delay(3000);
-
-  await probePinterestSelectors(session.page);
-
-  console.log("[probe] closing browser session...");
-  await closeBrowserSession(session.context);
-  console.log("[probe] done");
+  console.log("[probe] starting probe...");
+  await probePinterestSelectors();
   process.exit(0);
 }
 

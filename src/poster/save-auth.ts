@@ -1,4 +1,5 @@
 import { chromium } from "playwright";
+import { writeFileSync } from "node:fs";
 import { config } from "../config";
 
 async function main(): Promise<void> {
@@ -40,8 +41,16 @@ async function main(): Promise<void> {
     });
   });
 
+  // Save full storageState (for backward compat)
   await context.storageState({ path: authStatePath });
   console.log(`[save-auth] Session saved to ${authStatePath}`);
+
+  // Also save cookies separately for pinterest-js-client
+  const cookies = await context.cookies();
+  const cookiesPath = authStatePath.replace(/\.json$/, "_cookies.json");
+  writeFileSync(cookiesPath, JSON.stringify(cookies, null, 2));
+  console.log(`[save-auth] Cookies saved to ${cookiesPath} (${cookies.length} cookies)`);
+
   console.log("[save-auth] Done! You can now close the browser.");
 
   await context.close();
