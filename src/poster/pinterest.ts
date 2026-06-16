@@ -26,6 +26,13 @@ const SELECTORS = {
   ] as const,
   titleInput: [
     "textarea#pinTitle",
+    'input[placeholder*="заголовок"]',
+    'input[placeholder*="Заголовок"]',
+    'input[placeholder*="название"]',
+    'input[placeholder*="Название"]',
+    'input[placeholder*="title"]',
+    'input[placeholder*="Title"]',
+    'input[placeholder*="Add your title"]',
     'textarea[placeholder="Добавьте название"]',
     'textarea[placeholder*="Добавьте название"]',
     'textarea[placeholder*="название"]',
@@ -42,11 +49,11 @@ const SELECTORS = {
     'textarea[aria-label*="Title"]',
     'textarea[aria-label*="Название"]',
     'textarea[aria-label*="Заголовок"]',
-    'textarea[class*="title"]',
-    'textarea[class*="Title"]',
     'input[data-test-id="pin-title"]',
-    'input[placeholder*="title"]',
-    'input[placeholder*="Title"]',
+    'input[aria-label*="title"]',
+    'input[aria-label*="Title"]',
+    'input[aria-label*="Название"]',
+    'input[aria-label*="Заголовок"]',
     '[data-test-id="pin-title"]',
     '[data-test-id="pin-name-input"]',
     '[data-test-id="pin-title-input"]',
@@ -55,9 +62,9 @@ const SELECTORS = {
     'div[role="textbox"][aria-label*="Title"]',
     'div[role="textbox"][aria-label*="Название"]',
     'div[role="textbox"][aria-label*="Заголовок"]',
+    'input[type="text"]',
     'div[contenteditable="true"]',
     'textarea',
-    'input[type="text"]',
   ] as const,
   descriptionInput: [
     'textarea[placeholder*="description"]',
@@ -87,13 +94,15 @@ const SELECTORS = {
     'textarea:nth-child(2)',
   ] as const,
   linkInput: [
+    'input[placeholder*="целевую ссылку"]',
+    'input[placeholder*="ссылку"]',
+    'input[placeholder*="Ссылка"]',
     'input[placeholder*="link"]',
     'input[placeholder*="Link"]',
     'input[placeholder*="URL"]',
     'input[placeholder*="website"]',
     'input[placeholder*="Website"]',
     'input[placeholder*="destination"]',
-    'input[placeholder*="Ссылка"]',
     'textarea[placeholder="Добавьте целевую ссылку"]',
     'textarea[placeholder*="Добавьте целевую ссылку"]',
     'textarea[placeholder*="целевую ссылку"]',
@@ -109,8 +118,6 @@ const SELECTORS = {
     'input[aria-label*="Link"]',
     'input[aria-label*="URL"]',
     'input[aria-label*="Ссылка"]',
-    'input[class*="link"]',
-    'input[class*="Link"]',
     'input[type="url"]',
     'input[type="text"]',
     '[data-test-id="pin-link"]',
@@ -265,7 +272,7 @@ async function waitForFormReady(page: Page, debug = false): Promise<void> {
   // Ждём пока после загрузки медиа появится форма с полями
   try {
     await page.waitForSelector(
-      'textarea, input[placeholder*="title"], input[placeholder*="Title"], input[placeholder*="link"], input[placeholder*="Link"]',
+      'textarea, input[placeholder*="заголовок"], input[placeholder*="Заголовок"], input[placeholder*="title"], input[placeholder*="Title"], input[placeholder*="целевую ссылку"], input[placeholder*="link"], input[placeholder*="Link"]',
       { timeout: 90000 }
     );
   } catch {
